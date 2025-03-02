@@ -1,0 +1,66 @@
+services:
+  cms:
+    image: desbordante_cms
+    restart: always
+    build:
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      DATABASE_CLIENT: ${CMS_DATABASE_CLIENT}
+      DATABASE_HOST: postgres_cms
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${CMS_DATABASE_NAME}
+      DATABASE_USERNAME: ${CMS_DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${CMS_DATABASE_PASSWORD}
+      JWT_SECRET: ${CMS_JWT_SECRET}
+      ADMIN_JWT_SECRET: ${CMS_ADMIN_JWT_SECRET}
+      API_TOKEN_SALT: ${CMS_API_TOKEN_SALT}
+      APP_KEYS: ${CMS_APP_KEYS}
+    ports:
+      - "1337:1337"
+    volumes:
+      - cms-uploads:/cms/public/uploads/
+    networks:
+      - network
+    depends_on:
+      - postgres_cms
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: 20m
+
+  postgres_cms:
+    image: mirror.gcr.io/postgres:14.1
+    restart: always
+    environment:
+      POSTGRES_USER: ${CMS_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${CMS_DATABASE_PASSWORD}
+      POSTGRES_DB: ${CMS_DATABASE_NAME}
+    volumes:
+      - cms-data:/var/lib/postgresql/data/
+    expose:
+      - '5432'
+    networks:
+      - network
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: 20m
+
+networks:
+  network:
+    name: csm_network
+
+volumes:
+  cms-uploads:
+    driver: local
+    driver_opts:
+      type: 'volume'
+      o: 'bind'
+      device: '${PWD}/volumes/cms-uploads/'
+  cms-data:
+    driver: local
+    driver_opts:
+      type: 'volume'
+      o: 'bind'
+      device: '${PWD}/volumes/cms-data/'
