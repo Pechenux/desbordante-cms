@@ -1,18 +1,19 @@
 import path from 'path';
 
 export default ({ env }) => ({
-  graphql: {
+  documentation: {
     enabled: true,
     config: {
-      generateArtifacts: true,
-      shadowCRUD: true,
-      defaultLimit: 100,
-      artifacts: {
-        schema: path.join(__dirname, '..', '..', 'schema.graphql'),
+      openapi: '3.0.0',
+      info: {
+        version: '1.0.0',
+        title: 'Desbordante CMS Documentation',
       },
-      apolloServer: {
-        introspection: true,
+      'x-strapi-config': {
+        plugins: [],
+        path: '/documentation',
       },
-    },
-  },
+      servers: [{ url: 'http://localhost:1337/api', description: 'Development server' }],
+    }
+  }
 });
