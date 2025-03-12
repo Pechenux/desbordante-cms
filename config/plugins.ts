@@ -2,18 +2,25 @@ import path from 'path';
 
 export default ({ env }) => ({
   documentation: {
-    enabled: true,
+    enabled: env("NODE_ENV", "production") === "development",
     config: {
-      openapi: '3.0.0',
+      openapi: "3.0.0",
       info: {
-        version: '1.0.0',
-        title: 'Desbordante CMS Documentation',
+        version: "1.0.0",
+        title: "Desbordante CMS Documentation",
       },
-      'x-strapi-config': {
+      "x-strapi-config": {
         plugins: [],
-        path: '/documentation',
+        path: "/documentation",
       },
-      servers: [{ url: 'http://localhost:1337/api', description: 'Development server' }],
-    }
-  }
+      servers: [
+        {
+          url: `http://${env("DOMAIN", "localhost")}${
+            env("PORT") ? ":" + env("PORT") : ""
+          }/cms`,
+          description: "Development server",
+        },
+      ],
+    },
+  },
 });

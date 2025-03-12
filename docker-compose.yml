@@ -16,6 +16,7 @@ services:
       ADMIN_JWT_SECRET: ${CMS_ADMIN_JWT_SECRET}
       API_TOKEN_SALT: ${CMS_API_TOKEN_SALT}
       APP_KEYS: ${CMS_APP_KEYS}
+      DOMAIN: ${CMS_DOMAIN}
     ports:
       - "1337:1337"
     volumes:
