@@ -17,7 +17,7 @@ export default ({ env }) => ({
         {
           url: `http://${env("DOMAIN", "localhost")}${
             env("PORT") ? ":" + env("PORT") : ""
-          }/cms`,
+          }/api`,
           description: "Development server",
         },
       ],
