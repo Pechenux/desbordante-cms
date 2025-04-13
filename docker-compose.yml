@@ -4,6 +4,7 @@ services:
     restart: always
     build:
       dockerfile: Dockerfile
+      network: host
     environment:
       NODE_ENV: production
       DATABASE_CLIENT: ${CMS_DATABASE_CLIENT}
