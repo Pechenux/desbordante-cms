@@ -9,7 +9,7 @@ services:
       NODE_ENV: production
       DATABASE_CLIENT: ${CMS_DATABASE_CLIENT}
       DATABASE_HOST: postgres_cms
-      DATABASE_PORT: 5432
+      DATABASE_PORT: 8001
       DATABASE_NAME: ${CMS_DATABASE_NAME}
       DATABASE_USERNAME: ${CMS_DATABASE_USERNAME}
       DATABASE_PASSWORD: ${CMS_DATABASE_PASSWORD}
@@ -41,7 +41,9 @@ services:
     volumes:
       - cms-data:/var/lib/postgresql/data/
     expose:
-      - '5432'
+      - '8001:5432'
+    ports:
+      - "8001:5432"
     networks:
       - network
     logging:
