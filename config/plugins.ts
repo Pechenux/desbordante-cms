@@ -2,7 +2,7 @@ import path from 'path';
 
 export default ({ env }) => ({
   documentation: {
-    enabled: env("NODE_ENV", "production") === "development",
+    enabled: true,
     config: {
       openapi: "3.0.0",
       info: {
